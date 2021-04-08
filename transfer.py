@@ -13,7 +13,8 @@ class TransferRepos:
         self._username = username
         self._transfer_to = transfer_to
 
-        self._TRANSFER_URL = _BASE_URL.format(ext="repos/{username}/{repository}/transfer")
+        self._TRANSFER_URL = _BASE_URL.format(
+            ext="repos/{username}/{repository}/transfer")
         self._REPOSITORY_URL = _BASE_URL.format(ext="users/{username}/repos")
 
         self._TRANSFER_HEADERS = {
@@ -22,12 +23,16 @@ class TransferRepos:
             "Authorization": "token {}".format(token)
         }
 
+        self._REPOSITORIES_URL_ = self._REPOSITORY_URL.format(
+            username=self._username) + '?&per_page=999'
+
     @staticmethod
     def _validate_response(response):
         if response.status_code >= 200 and response.status_code <= 300:
             return response.text
 
-        raise ResponseError(f"Status code out of range: {response.status_code}\n{response.text}")
+        raise ResponseError(
+            f"Status code out of range: {response.status_code}\n{response.text}")
 
     def get_repos(self):
         response = requests.get(
