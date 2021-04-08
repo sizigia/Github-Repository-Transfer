@@ -36,7 +36,7 @@ class TransferRepos:
 
     def get_repos(self):
         response = requests.get(
-            self._REPOSITORY_URL.format(username=self._username)
+            self._REPOSITORIES_URL_.format(username=self._username)
         )
 
         repos = json.loads(self._validate_response(response=response))
